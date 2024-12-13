@@ -1,0 +1,31 @@
+{
+  "name": "bookingts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": " npx tsc && nodemon build/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dot-env": "^0.0.1",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.0",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.10.2",
+    "@types/nodemon": "^1.19.6",
+    "dotenv": "^16.4.7",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
