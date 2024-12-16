@@ -5,21 +5,22 @@ interface reqBody{
     userId:string,
     quantity:number,
     address:string,
-    cart:JSON,
-    status:string,
-
-    
 }
+interface resBody{
+    message:string,
+    data?:any,
+    }
 
 let { find, updateOne, findOne, create } = controllerService
 export const bookingService = {
-    addToCart: async (req: Request<{},{},reqBody>, res: Response): Promise<void> => {
+    addToCart: async (req: Request<{},{},reqBody>, res: Response<resBody>): Promise<void> => {
         try {
-            const { productId,userId } = req.body;
-            const quantity = parseInt(req.body.quantity as unknown as string, 10);
+            const { productId } = req.body;
+            const userId=req.userId
+            const quantity = parseInt(req.body.quantity as unknown as string , 10);
             if (isNaN(quantity)) {
-                res.status(400).json({ message: "Invalid quantity provided." });
-                return;
+                res.status(400).json({
+                    message: "Invalid quantity provided."});
             }
             if (!userId) {
                 res.status(401).json({ message: "User not authenticated." });
@@ -56,12 +57,12 @@ export const bookingService = {
 
             const existingItem = cart.items.find((item: any) => item.productId === productId);
             if (existingItem) {
-                existingItem.quantity += quantity;
+                existingItem.quantity += quantity
             } else {
                 cart.items.push({ productId, quantity: quantity, price: product.price });
             }
 
-            product.stock -= quantity;
+            product.stock -= quantity
             await updateOne("Product", { productId }, { stock: product.stock });
 
             const updateResponse = await updateOne("Cart", { userId }, { items: cart.items });
@@ -76,7 +77,7 @@ export const bookingService = {
                 items: cartData?.data.items,
             };
 
-            res.status(200).json({ message: "Product added to cart successfully.", cartItems });
+            res.status(200).json({ message: "Product added to cart successfully.", data:cartItems });
         } catch (error: any) {
             console.error("Error in addToCart:", error.message || error);
             res.status(500).json({ message: "An error occurred while adding to cart." });
@@ -93,10 +94,11 @@ export const bookingService = {
 
         }
     },
-        placeOrder: async (req: Request<{}, {}, reqBody>, res: Response): Promise<void> => {
+        placeOrder: async (req: Request, res: Response): Promise<void> => {
             try {
-                const { address,userId } = req.body;
-    
+                const { address } = req.body;
+                const userId=req.userId
+
                 if (!userId) {
                     res.status(400).json({ message: "User ID is required." });
                     return;
