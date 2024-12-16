@@ -1,0 +1,1 @@
+{"status":"success","data":{"address":"kerala","userId":"USR001","items":[{"productId":"PDT011","quantity":44,"price":1299,"_id":"675febf21b1a58a95232c68d"}],"status":"Placed","totalAmount":57156,"_id":"675febf61b1a58a95232c695","orderId":"ORD017","__v":0}}
